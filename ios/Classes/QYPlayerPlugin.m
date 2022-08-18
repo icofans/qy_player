@@ -26,7 +26,7 @@
 //      NSDictionary *data = call.arguments;
 //      bool success = [qysdk init];
     #if TARGET_IPHONE_SIMULATOR//模拟器
-    result("1.0");
+    result(@"1.0");
     #elif TARGET_OS_IPHONE//真机
     result([QYSession Version]);
     #endif
