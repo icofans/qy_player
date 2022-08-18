@@ -1,6 +1,12 @@
+
+#if TARGET_IPHONE_SIMULATOR//模拟器
+#import "QYPlayerPlugin.h"
+#import "QYPlatformView.h"
+#elif TARGET_OS_IPHONE//真机
 #import "QYPlayerPlugin.h"
 #import <qysdk/qysdk.h>
 #import "QYPlatformView.h"
+#endif
 
 @implementation QYPlayerPlugin
 
@@ -19,10 +25,13 @@
   if ([@"init_sdk" isEqualToString:call.method]) {
 //      NSDictionary *data = call.arguments;
 //      bool success = [qysdk init];
-      result([QYSession Version]);
+    #if TARGET_IPHONE_SIMULATOR//模拟器
+    result("1.0");
+    #elif TARGET_OS_IPHONE//真机
+    result([QYSession Version]);
+    #endif
   } else {
     result(FlutterMethodNotImplemented);
   }
 }
-
 @end

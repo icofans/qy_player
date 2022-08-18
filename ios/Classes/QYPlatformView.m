@@ -1,3 +1,5 @@
+
+
 //
 //  QYPlatformView.m
 //  qy_player
@@ -5,9 +7,83 @@
 //  Created by 捡来的💻 on 2022/6/27.
 //
 
+#if TARGET_IPHONE_SIMULATOR//模拟器
+#import "QYPlatformView.h"
+
+@implementation QYPlatformViewFactory{
+    NSObject<FlutterBinaryMessenger>* _messenger;
+  }
+
+- (instancetype)initWithMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
+  self = [super init];
+  if (self) {
+    _messenger = messenger;
+  }
+  return self;
+}
+
+- (NSObject<FlutterPlatformView>*)createWithFrame:(CGRect)frame
+                                   viewIdentifier:(int64_t)viewId
+                                        arguments:(id _Nullable)args {
+  return [[QYPlatformView alloc] initWithFrame:frame
+                              viewIdentifier:viewId
+                                   arguments:args
+                             binaryMessenger:_messenger];
+}
+
+@end
+
+@interface QYPlatformView ()
+
+@end
+
+@implementation QYPlatformView {
+    UIView *view;
+    NSObject<FlutterBinaryMessenger>* _messenger;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+               viewIdentifier:(int64_t)viewId
+                    arguments:(id _Nullable)args
+              binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
+  if (self = [super init]) {
+      view = [[UIView alloc] init];
+      _messenger = messenger;
+      [self initMethodChannel];
+  }
+  return self;
+}
+
+- (void)initMethodChannel {
+    NSLog(@"初始化消息通道");
+    FlutterMethodChannel *channel = [FlutterMethodChannel methodChannelWithName:@"qy_player" binaryMessenger:_messenger];
+    [channel setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
+        if ([@"preview" isEqualToString:call.method]) {
+            result(@"开始播放");
+        } else  if ([@"stop_preview" isEqualToString:call.method]) {
+
+            result(@"开始播放");
+        }   else  if ([@"ctrolSound" isEqualToString:call.method]) {
+            result(@"开始播放");
+        } else if ([@"talk" isEqualToString:call.method]) {
+            result(@"开始播放");
+        } else  if ([@"stop_talk" isEqualToString:call.method]) {
+            result(@"开始播放");
+        }
+        else {
+            result(FlutterMethodNotImplemented);
+        }
+    }];
+}
+
+- (UIView*)view {
+  return view;
+}
+@end
+
+#elif TARGET_OS_IPHONE//真机
 #import "QYPlatformView.h"
 #import <qysdk/qysdk.h>
-
 
 @implementation QYPlatformViewFactory{
     NSObject<FlutterBinaryMessenger>* _messenger;
@@ -170,3 +246,4 @@
 }
 
 @end
+#endif
