@@ -151,7 +151,7 @@
             self->player = [[QYPlayer alloc] init];
             [self->player SetEventDelegate:self];
             [self->player SetCanvas: self->view];
-            [self->player CtrlAudio:YES];
+            [self->player CtrlAudio:NO];
             NSLog(@"player = %@",self->player);
 //            [self->player SyncConnect:viewUrl];
             [self->player Connect:viewUrl CallBack:^(int32_t ret) {
