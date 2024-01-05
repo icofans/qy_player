@@ -20,7 +20,7 @@ A new Flutter project.
   
   
   s.vendored_frameworks = 'Frameworks/qysdk.framework'
-  s.libraries = 'z','c++','iconv.2.4.0','bz2.1.0'
+  s.libraries = 'z','c++','iconv','bz2.1.0'
   s.frameworks = 'VideoToolbox'
   
 
